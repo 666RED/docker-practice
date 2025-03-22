@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Build the dependencies
-RUN npm ci --only=production
+RUN npm ci
 
 # Copy the rest of the files in the work dir
 # Run this line after run npm ci because the result is cached (for optimization)
@@ -16,6 +16,18 @@ COPY . .
 
 # Compile TypeScript before running
 RUN npm run build 
+
+# Production stage
+FROM node:18-alpine AS production
+
+WORKDIR /usr/src/app
+
+# Copy only necessary files from the build stage
+COPY --from=build /usr/src/app/package*.json ./
+COPY --from=build /usr/src/app/dist ./dist
+
+# Install only production dependencies
+RUN npm ci --only=production
 
 EXPOSE 3000
 
