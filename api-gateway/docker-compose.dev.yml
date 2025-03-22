@@ -1,0 +1,11 @@
+services:
+  api:
+    build:
+      context: . # Dockerfile location
+      target: development
+    volumes:
+      - ./:/usr/src/app
+      - /urs/src/app/node_modules # Prevent the node_modules file from overwritten
+    ports:
+      - 3000:3000
+    command: npm run dev # overwrite npm run build in Dockerfile (because this is dev)
