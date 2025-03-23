@@ -1,5 +1,5 @@
 # Use the official node.js 18 image with alpine linux as the base image
-FROM node:18-alpine as development
+FROM node:18-alpine AS development
 
 # Set the workdir
 WORKDIR /usr/src/app
@@ -23,8 +23,8 @@ FROM node:18-alpine AS production
 WORKDIR /usr/src/app
 
 # Copy only necessary files from the build stage
-COPY --from=build /usr/src/app/package*.json ./
-COPY --from=build /usr/src/app/dist ./dist
+COPY --from=development /usr/src/app/package*.json ./
+COPY --from=development /usr/src/app/dist ./dist
 
 # Install only production dependencies
 RUN npm ci --only=production

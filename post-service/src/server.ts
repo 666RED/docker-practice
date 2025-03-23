@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import Redis from "ioredis";
 import cors from "cors";
 import helmet from "helmet";
-import postRoutes from "../src/routes/postRoutes";
+import postRoutes from "./routes/postRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import logger from "./utils/logger";
 import { connectToRabbitMQ } from "./utils/rabbitmq";
